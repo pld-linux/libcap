@@ -1,0 +1,11 @@
+--- libcap-1.92/libcap/Makefile.orig	Fri Apr 23 08:15:10 1999
++++ libcap-1.92/libcap/Makefile	Tue Oct 22 23:33:28 2002
+@@ -34,7 +34,7 @@
+ #	@sed -ne '/^#define[ \t]CAP[_A-Z]\+[ \t]\+[0-9]\+/{s/^#define CAP_\([^ \t]*\)[ \t]*\([^ \t]*\)/  \{ \2, \"\1\" \},/;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;p;}' < /usr/include/linux/capability.h | fgrep -v 0x > cap_names.sed
+ 
+ $(MINLIBNAME): $(OBJS)
+-	$(LD) -soname $(MAJLIBNAME) -x -shared -o $@ $(OBJS)
++	$(CC) -Wl,-soname -Wl,$(MAJLIBNAME) -Wl,-x -shared -o $@ $(OBJS)
+ 	ln -sf $(MINLIBNAME) $(MAJLIBNAME)
+ 	ln -sf $(MAJLIBNAME) $(LIBNAME)
+ 
