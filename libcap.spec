@@ -3,11 +3,11 @@ Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
 Version:	1.92
 Release:	1
-Copyright:	BSD or GNU GPL
+License:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
-Patch:		libcap-1.92-make.patch
+Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
+Patch0:		libcap-1.92-make.patch
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -17,13 +17,14 @@ The POSIX.1e capability library for Linux. This package contains the
 getcap and setcap binaries and manual pages.
 
 %description -l pl
-Biblioteka, programy oraz strony manuala zawieraj±ce implementacje 
-standardu POSIX.1e. 
+Biblioteka, programy oraz strony manuala zawieraj±ce implementacje
+standardu POSIX.1e.
 
 %package devel
 Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
+Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
