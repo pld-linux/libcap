@@ -1,13 +1,14 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
-Version:	0.122
-Release:	2
+Version:	1.0
+Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
-Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.1/%{name}-%{version}.tar.bz2
+Group(pl):	Narzêdzia/System
+URL:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/
+Source:		%{name}-%{version}.tar.bz2
 Icon:		libcap.gif
-URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 Buildroot:	/tmp/%{name}-%{version}-root
 Conflicts:	glibc <= 2.0.7
 
@@ -19,7 +20,7 @@ getcap and setcap binaries and manual pages.
 Biblioteka, programy oraz strony manuala zawieraj±ce implementacje 
 standardu POSIX.1e. 
 
-%package devel
+%package	devel
 Summary:	Header files and development dovumentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
@@ -40,10 +41,13 @@ make "COPTFLAGS=$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 make install FAKEROOT=$RPM_BUILD_ROOT
 
 gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
+bzip2 -9 README 
 
+chmod 755 $RPM_BUILD_ROOT/lib/lib*.so.*.*
 strip $RPM_BUILD_ROOT/lib/lib*so.*.*
 
 %post   -p /sbin/ldconfig
@@ -53,18 +57,29 @@ strip $RPM_BUILD_ROOT/lib/lib*so.*.*
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%attr(755,root,root) /lib/lib*.so.*.*
-%attr(755,root,root) /sbin/*
+%defattr(755,root,root,755)
+
+/lib/lib*.so.*
+/sbin/*
+
 %attr(644,root,root) /usr/man/man2/*
 
 %files devel
 %defattr(644,root,root,755)
-%doc README 
-%attr(755,root,root) /lib/lib*.so.*.*
+%doc README.bz2 
+
+%attr(755,root,root) /lib/lib*.so
+
 /usr/man/man3/*
 /usr/include/sys/capability.h
 
 %changelog
+* Sun Mar 14 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+- updated to 1.0,
+- fixed duplicate libs in devel subpackage,
+- added Group(pl) in main package,
+- compressed documentation.
+
 * Thu Mar 11 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [0.122-2]
 - added URL,
@@ -79,4 +94,6 @@ rm -rf $RPM_BUILD_ROOT
 - updated to 0.122, 
 - added %changelog,
 - translation modified for pl
-  (translation prepared by Krzysztof Baranowski <kgb@knm.org.pl>).
+  (prepared by Krzysztof Baranowski <kgb@knm.org.pl>),
+- build against GNU libc-2.1.
+  
