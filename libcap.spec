@@ -36,7 +36,7 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 %setup -q
 
 %build
-make "COPTFLAGS=$RPM_OPT_FLAGS -g"
+make "COPTFLAGS=$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
