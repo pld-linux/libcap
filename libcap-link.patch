@@ -28,7 +28,7 @@
 +  __asm__ volatile ("pushl %%ebx\nmovl %%edx, %%ebx\nint $0x80\npopl %%ebx" \
 +	: "=a" (__res) \
 +	: "0" (__NR_capget), "d" (header), "c" (data));
-+  printf("%d", _libcap_kernel_version);
++  /* printf("%d", _libcap_kernel_version); */
 +  __syscall_return(int, __res);
 +}
 +
