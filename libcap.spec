@@ -41,7 +41,11 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 %patch1 -p1
 
 %build
+%ifarch alpha
 %{__make} "COPTFLAG=%{rpmcflags} -fPIC"
+%else
+%{__make} "COPTFLAG=%{rpmcflags} "
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
