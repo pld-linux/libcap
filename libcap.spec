@@ -6,6 +6,7 @@ Release:	4
 License:	GPL/BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
+# Source0-md5:	d7f09dc550edc902caf70975e8579c4d
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
 Icon:		libcap.gif
