@@ -72,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindor}/*
+%attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) /lib/lib*.so.*.*
 %{_mandir}/man8/*
 
