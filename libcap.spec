@@ -3,7 +3,7 @@ Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	1.92
-Release:	5
+Release:	6
 License:	GPL/BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
