@@ -2,7 +2,7 @@ Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
 Version:	1.10
-Release:	1
+Release:	2
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -61,13 +61,11 @@ rm -rf $RPM_BUILD_ROOT
 /lib/lib*.so.*.*
 /sbin/*
 
-%attr(644,root,root) %{_mandir}/man2/*
-
 %files devel
 %defattr(644,root,root,755)
 %doc README.gz
 
 %attr(755,root,root) /lib/lib*.so
 
-%{_mandir}/man3/*
+%{_mandir}/man[23]/*
 %{_includedir}/sys/capability.h
