@@ -1,7 +1,7 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
-Version:	1.0
+Version:	1.02
 Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
@@ -10,7 +10,6 @@ Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{n
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 Buildroot:	/tmp/%{name}-%{version}-root
-Conflicts:	glibc <= 2.0.7
 
 %description
 The POSIX.1e capability library for Linux. This package contains the
@@ -57,7 +56,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(755,root,root,755)
 
-/lib/lib*.so.*
+/lib/lib*.so.*.*
 /sbin/*
 
 %attr(644,root,root) /usr/man/man2/*
@@ -72,6 +71,11 @@ rm -rf $RPM_BUILD_ROOT
 /usr/include/sys/capability.h
 
 %changelog
+* Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [1.02-1]
+- removed "Conflicts: glibc <= 2.0.7" (not neccessary now),
+- recompiles on new rpm.
+
 * Mon Mar 15 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [1.0-1]
 - strip shared libraries with --strip-unneeded.
