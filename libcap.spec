@@ -37,11 +37,11 @@ Requires:	%{name} = %{version}
 %description devel
 Header files and development documentation for libcap.
 
-%description -l pl devel
+%description devel -l pl
 Pliki nag³ówkowe i dokumentacja do libcap.
 
-%description -l pt_BR devel
-Arquivos de desenvolvimento para capabilities
+%description devel -l pt_BR
+Arquivos de desenvolvimento para capabilities.
 
 %prep
 %setup -q
