@@ -1,12 +1,12 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
-Version:	1.03
+Version:	1.10
 Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.bz2
+Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 Buildroot:	/tmp/%{name}-%{version}-root
