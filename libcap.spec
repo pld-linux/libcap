@@ -59,6 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	FAKEROOT=$RPM_BUILD_ROOT \
+	LIBDIR=$RPM_BUILD_ROOT/%{_lib} \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
 %clean
@@ -71,10 +72,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGELOG License README
 %attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) /lib/lib*.so.*.*
+%attr(755,root,root) /%{_lib}/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) /lib/lib*.so
+%attr(755,root,root) /%{_lib}/lib*.so
 %{_mandir}/man[23]/*
 %{_includedir}/sys/capability.h
