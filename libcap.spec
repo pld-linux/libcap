@@ -5,14 +5,14 @@ Name:		libcap
 Version:	1.10
 Release:	1
 Epoch:		1
-License:	GPL/BSD
+License:	GPL or BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
 # Source0-md5:	2c09eea823f67cfdde96177a959bc39b
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
 Icon:		libcap.gif
-URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
+URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
@@ -69,12 +69,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc CHANGELOG License README
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) /lib/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%doc README
 %attr(755,root,root) /lib/lib*.so
 %{_mandir}/man[23]/*
 %{_includedir}/sys/capability.h
