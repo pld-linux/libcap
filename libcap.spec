@@ -39,12 +39,12 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 %patch -p1
 
 %build
-make "COPTFLAGS=$RPM_OPT_FLAGS"
+%{__make} "COPTFLAGS=$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install \
+%{__make} install \
 	FAKEROOT=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
