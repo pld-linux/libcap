@@ -1,7 +1,7 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
-Version:	1.02
+Version:	1.03
 Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
@@ -19,7 +19,7 @@ getcap and setcap binaries and manual pages.
 Biblioteka, programy oraz strony manuala zawieraj±ce implementacje 
 standardu POSIX.1e. 
 
-%package	devel
+%package devel
 Summary:	Header files and development dovumentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
@@ -41,7 +41,9 @@ make "COPTFLAGS=$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install FAKEROOT=$RPM_BUILD_ROOT
+make install \
+	FAKEROOT=$RPM_BUILD_ROOT \
+	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* README 
 
@@ -71,6 +73,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/sys/capability.h
 
 %changelog
+* Sat May 29 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [1.03-1]
+- now package is FHS 2.0 compliant,
+- recompiled on new rpm.
+
+- more rpm macros.
+
 * Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [1.02-1]
 - removed "Conflicts: glibc <= 2.0.7" (not neccessary now),
