@@ -2,7 +2,7 @@ Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
 Version:	1.92
-Release:	1
+Release:	2
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -38,7 +38,7 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 %patch -p1
 
 %build
-make "COPTFLAGS=$RPM_OPT_FLAGS"
+make "COPTFLAG=$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
