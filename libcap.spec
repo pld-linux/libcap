@@ -43,7 +43,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install FAKEROOT=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* README 
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* README 
 
 strip --strip-unneeded $RPM_BUILD_ROOT/lib/lib*so.*.*
 
@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 /lib/lib*.so.*.*
 /sbin/*
 
-%attr(644,root,root) /usr/man/man2/*
+%attr(644,root,root) %{_mandir}/man2/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -67,7 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /lib/lib*.so
 
-/usr/man/man3/*
+%{_mandir}/man3/*
 /usr/include/sys/capability.h
 
 %changelog
