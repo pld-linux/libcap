@@ -1,13 +1,14 @@
 Summary:	POSIX.1e capability suite
-Summary(pl):	Wsparcie dla standardu POSIX.1e
+Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Name:		libcap
 Version:	1.92
 Release:	1
 License:	BSD or GNU GPL
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
-Patch0:		libcap-1.92-make.patch
+Patch0:		%{name}-1.92-make.patch
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -17,13 +18,14 @@ The POSIX.1e capability library for Linux. This package contains the
 getcap and setcap binaries and manual pages.
 
 %description -l pl
-Biblioteka, programy oraz strony manuala zawieraj±ce implementacje
-standardu POSIX.1e.
+Biblioteka, programy oraz strony manuala zawieraj±ce implementacjê
+"capability" standardu POSIX.1e.
 
 %package devel
 Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
@@ -39,7 +41,7 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 %patch -p1
 
 %build
-%{__make} "COPTFLAGS=$RPM_OPT_FLAGS"
+%{__make} "COPTFLAGS=%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -48,9 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 	FAKEROOT=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* README 
-
-strip --strip-unneeded $RPM_BUILD_ROOT/lib/lib*so.*.*
+gzip -9nf README 
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
