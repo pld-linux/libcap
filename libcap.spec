@@ -1,12 +1,13 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu POSIX.1e
 Name:		libcap
-Version:	1.10
-Release:	2
+Version:	1.92
+Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
+Patch:		libcap-1.92-make.patch
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,6 +35,7 @@ Pliki nag³ówkowe i dokumentacja do libcap.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 make "COPTFLAGS=$RPM_OPT_FLAGS"
@@ -56,16 +58,14 @@ strip --strip-unneeded $RPM_BUILD_ROOT/lib/lib*so.*.*
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(755,root,root,755)
-
-/lib/lib*.so.*.*
-/sbin/*
+%defattr(644,root,root,755)
+%attr(755,root,root) /lib/lib*.so.*.*
+%attr(755,root,root) /sbin/*
+%{_mandir}/man8/*
 
 %files devel
 %defattr(644,root,root,755)
 %doc README.gz
-
 %attr(755,root,root) /lib/lib*.so
-
 %{_mandir}/man[23]/*
 %{_includedir}/sys/capability.h
