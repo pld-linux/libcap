@@ -21,14 +21,14 @@ Biblioteka, programy oraz strony manuala zawieraj±ce implementacje
 standardu POSIX.1e. 
 
 %package devel
-Summary:	Header files and development dovumentation for libcap
+Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
-Header files and development dovumentation for libcap.
+Header files and development documentation for libcap.
 
 %description -l pl devel
 Pliki nag³ówkowe i dokumentacja do libcap.
