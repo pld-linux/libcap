@@ -9,7 +9,7 @@ Group(pl):	Narzêdzia/System
 Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The POSIX.1e capability library for Linux. This package contains the
