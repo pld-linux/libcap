@@ -1,5 +1,6 @@
 Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
+Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	1.92
 Release:	4
@@ -23,9 +24,13 @@ getcap and setcap binaries and manual pages.
 Biblioteka, programy oraz strony manuala zawieraj±ce implementacjê
 "capability" standardu POSIX.1e.
 
+%description -l pt_BR
+Biblioteca para leitura e configuração de capabilities.
+
 %package devel
 Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
+Summary(pt_BR):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
@@ -34,6 +39,9 @@ Header files and development documentation for libcap.
 
 %description -l pl devel
 Pliki nag³ówkowe i dokumentacja do libcap.
+
+%description -l pt_BR devel
+Arquivos de desenvolvimento para capabilities
 
 %prep
 %setup -q
