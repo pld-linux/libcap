@@ -6,9 +6,9 @@ Release:	1
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-URL:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/
-Source:		%{name}-%{version}.tar.bz2
+Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.bz2
 Icon:		libcap.gif
+URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 Buildroot:	/tmp/%{name}-%{version}-root
 Conflicts:	glibc <= 2.0.7
 
@@ -44,11 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 
 make install FAKEROOT=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
-bzip2 -9 README 
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* README 
 
-chmod 755 $RPM_BUILD_ROOT/lib/lib*.so.*.*
-strip $RPM_BUILD_ROOT/lib/lib*so.*.*
+strip --strip-unneeded $RPM_BUILD_ROOT/lib/lib*so.*.*
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -66,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc README.bz2 
+%doc README.gz
 
 %attr(755,root,root) /lib/lib*.so
 
@@ -74,6 +72,10 @@ rm -rf $RPM_BUILD_ROOT
 /usr/include/sys/capability.h
 
 %changelog
+* Mon Mar 15 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [1.0-1]
+- strip shared libraries with --strip-unneeded.
+
 * Sun Mar 14 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
 - updated to 1.0,
 - fixed duplicate libs in devel subpackage,
@@ -96,4 +98,3 @@ rm -rf $RPM_BUILD_ROOT
 - translation modified for pl
   (prepared by Krzysztof Baranowski <kgb@knm.org.pl>),
 - build against GNU libc-2.1.
-  
