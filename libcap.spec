@@ -6,7 +6,7 @@ Release:	2
 Copyright:	BSD or GNU GPL
 Group:		Utilities/System
 Source:		ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.1/%{name}-%{version}.tar.bz2
-Icon:		Orange-Linux.gif
+Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 Buildroot:	/tmp/%{name}-%{version}-root
 Conflicts:	glibc <= 2.0.7
