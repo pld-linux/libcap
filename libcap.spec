@@ -68,7 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /lib/lib*.so
 
 %{_mandir}/man3/*
-/usr/include/sys/capability.h
+%{_includedir}/sys/capability.h
 
 %changelog
 * Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
