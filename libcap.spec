@@ -2,10 +2,11 @@ Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Name:		libcap
 Version:	1.92
-Release:	4
+Release:	5
 License:	GPL/BSD
 Group:		Applications/System
-Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
+Source0:	http://www.hr.kernel.org/pub/linux/libs/security/linux-privs/old/kernel-2.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	bf01930fcd4273f9c8b770d696161f79
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
 Icon:		libcap.gif
