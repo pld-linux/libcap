@@ -33,7 +33,7 @@ Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Summary(pt_BR):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files and development documentation for libcap.
