@@ -2,16 +2,23 @@ Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Name:		libcap
 Version:	1.92
-Release:	1
+Release:	2
 License:	BSD or GNU GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Aplicaciones/SystËme
 Group(pl):	Aplikacje/System
+Group(pt):	AplicaÁıes/Sistema
+Group(pt_BR):	AplicaÁıes/Sistema
+Group(ru):	“…Ãœ÷≈Œ…—/Û…”‘≈Õ¡
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
 Patch0:		%{name}-1.92-make.patch
 Icon:		libcap.gif
 URL:		http://linux.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_sbindir		/sbin
 
 %description
 The POSIX.1e capability library for Linux. This package contains the
@@ -25,11 +32,12 @@ Biblioteka, programy oraz strony manuala zawieraj±ce implementacjÍ
 Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag≥Ûwkowe i dokumentacja do libcap
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
 Group(uk):	Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name} = %{version}
@@ -64,8 +72,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindor}/*
 %attr(755,root,root) /lib/lib*.so.*.*
-%attr(755,root,root) /sbin/*
 %{_mandir}/man8/*
 
 %files devel
