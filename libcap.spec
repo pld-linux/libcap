@@ -5,13 +5,6 @@ Version:	1.92
 Release:	2
 License:	BSD or GNU GPL
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(es):	Aplicaciones/Sistema
-Group(fr):	Aplicaciones/Système
-Group(pl):	Aplikacje/System
-Group(pt):	Aplicações/Sistema
-Group(pt_BR):	Aplicações/Sistema
-Group(ru):	ğÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
 Patch0:		%{name}-1.92-make.patch
 Icon:		libcap.gif
@@ -32,14 +25,6 @@ Biblioteka, programy oraz strony manuala zawieraj±ce implementacjê
 Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description devel
