@@ -2,12 +2,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	1.92
-Release:	6
+Version:	1.10
+Release:	1
+Epoch:		1
 License:	GPL/BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{name}-%{version}.tar.gz
-# Source0-md5:	d7f09dc550edc902caf70975e8579c4d
+# Source0-md5:	2c09eea823f67cfdde96177a959bc39b
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
 Icon:		libcap.gif
@@ -32,7 +33,7 @@ Summary:	Header files and development documentation for libcap
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
 Summary(pt_BR):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description devel
 Header files and development documentation for libcap.
@@ -50,6 +51,7 @@ Arquivos de desenvolvimento para capabilities.
 
 %build
 %{__make} \
+	CC="%{__cc}" \
 	COPTFLAG="%{rpmcflags}"
 
 %install
@@ -69,7 +71,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) /lib/lib*.so.*.*
-%{_mandir}/man8/*
 
 %files devel
 %defattr(644,root,root,755)
