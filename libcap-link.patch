@@ -1,6 +1,6 @@
 --- libcap-1.92/libcap/Makefile.orig	Fri Apr 23 08:15:10 1999
 +++ libcap-1.92/libcap/Makefile	Tue Oct 22 23:33:28 2002
-@@ -34,7 +34,7 @@
+@@ -34,12 +34,12 @@
  #	@sed -ne '/^#define[ \t]CAP[_A-Z]\+[ \t]\+[0-9]\+/{s/^#define CAP_\([^ \t]*\)[ \t]*\([^ \t]*\)/  \{ \2, \"\1\" \},/;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;p;}' < /usr/include/linux/capability.h | fgrep -v 0x > cap_names.sed
  
  $(MINLIBNAME): $(OBJS)
@@ -9,3 +9,45 @@
  	ln -sf $(MINLIBNAME) $(MAJLIBNAME)
  	ln -sf $(MAJLIBNAME) $(LIBNAME)
  
+ %.o: %.c $(INCLS)
+-	$(CC) $(CFLAGS) -c $< -o $@
++	$(CC) $(CFLAGS) -fPIC -c $< -o $@
+ 
+ install: all
+ 	mkdir -p -m 0755 $(INCDIR)/sys
+--- libcap-1.92/libcap/cap_sys.c.orig	1999-04-23 08:16:31.000000000 +0200
++++ libcap-1.92/libcap/cap_sys.c	2003-07-26 23:46:58.000000000 +0200
+@@ -11,6 +11,25 @@
+ #define __LIBRARY__
+ #include <linux/unistd.h>
+ 
++#ifdef __i386__
++/* ugh, _syscall{1+} don't support PIC on x86 :/ */
++int capget(cap_user_header_t header, cap_user_data_t data)
++{ int __res;
++  __asm__ volatile ("pushl %%ebx\nmovl %%edx, %%ebx\nint $0x80\npopl %%ebx" \
++	: "=a" (__res) \
++	: "0" (__NR_capget), "d" (header), "c" (data));
++  printf("%d", _libcap_kernel_version);
++  __syscall_return(int, __res);
++}
++
++int capset(cap_user_header_t header, const cap_user_data_t data)
++{ int __res;
++  __asm__ volatile ("pushl %%ebx\nmovl %%edx, %%ebx\nint $0x80\npopl %%ebx" \
++	: "=a" (__res) \
++	: "0" (__NR_capset), "d" (header), "c" (data));
++  __syscall_return(int, __res);
++}
++#else
+ _syscall2(int, capget,
+ 	  cap_user_header_t, header,
+ 	  cap_user_data_t, data)
+@@ -18,6 +37,7 @@
+ _syscall2(int, capset,
+ 	  cap_user_header_t, header,
+ 	  const cap_user_data_t, data)
++#endif
+ 
+ /* library defaults to agreeing with the kernel under which it was
+    compiled */

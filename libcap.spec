@@ -49,11 +49,8 @@ Arquivos de desenvolvimento para capabilities
 %patch1 -p1
 
 %build
-%ifarch alpha
-%{__make} "COPTFLAG=%{rpmcflags} -fPIC"
-%else
-%{__make} "COPTFLAG=%{rpmcflags} "
-%endif
+%{__make} \
+	COPTFLAG="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
