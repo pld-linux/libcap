@@ -47,8 +47,6 @@ rm -rf $RPM_BUILD_ROOT
 	FAKEROOT=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
-gzip -9nf README 
-
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
@@ -63,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc README.gz
+%doc README
 %attr(755,root,root) /lib/lib*.so
 %{_mandir}/man[23]/*
 %{_includedir}/sys/capability.h
