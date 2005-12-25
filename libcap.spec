@@ -3,7 +3,7 @@ Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	1.10
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
@@ -62,6 +62,14 @@ rm -rf $RPM_BUILD_ROOT
 	LIBDIR=$RPM_BUILD_ROOT/%{_lib} \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
+install -d $RPM_BUILD_ROOT%{_libdir}
+ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo libcap.so.*.*) \
+	$RPM_BUILD_ROOT%{_libdir}/libcap.so
+
+# newer versions exist in man-pages
+# and these syscalls are specific to Linux/glibc, not libcap
+rm -f $RPM_BUILD_ROOT%{_mandir}/man2/cap{get,set}.2
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -76,6 +84,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) /%{_lib}/lib*.so
-%{_mandir}/man[23]/*
+%attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/sys/capability.h
+%{_mandir}/man3/*
