@@ -11,7 +11,6 @@ Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{n
 # Source0-md5:	2c09eea823f67cfdde96177a959bc39b
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
-Icon:		libcap.gif
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
