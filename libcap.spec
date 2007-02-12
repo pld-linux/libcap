@@ -1,6 +1,6 @@
 Summary:	POSIX.1e capability suite
-Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
-Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
+Summary(pl.UTF-8):   Wsparcie dla standardu "capability" POSIX.1e
+Summary(pt_BR.UTF-8):   Biblioteca para leitura e configuraÃ§Ã£o de capabilities.
 Name:		libcap
 Version:	1.10
 Release:	5
@@ -20,27 +20,27 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The POSIX.1e capability library for Linux. This package contains the
 getcap and setcap binaries and manual pages.
 
-%description -l pl
-Biblioteka, programy oraz strony manuala zawieraj±ce implementacjê
+%description -l pl.UTF-8
+Biblioteka, programy oraz strony manuala zawierajÄ…ce implementacjÄ™
 "capability" standardu POSIX.1e.
 
-%description -l pt_BR
-Biblioteca para leitura e configuração de capabilities.
+%description -l pt_BR.UTF-8
+Biblioteca para leitura e configuraÃ§Ã£o de capabilities.
 
 %package devel
 Summary:	Header files and development documentation for libcap
-Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
-Summary(pt_BR):	Arquivos de desenvolvimento para capabilities
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe i dokumentacja do libcap
+Summary(pt_BR.UTF-8):   Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files and development documentation for libcap.
 
-%description devel -l pl
-Pliki nag³ówkowe i dokumentacja do libcap.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe i dokumentacja do libcap.
 
-%description devel -l pt_BR
+%description devel -l pt_BR.UTF-8
 Arquivos de desenvolvimento para capabilities.
 
 %prep
