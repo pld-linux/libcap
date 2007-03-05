@@ -51,7 +51,8 @@ Arquivos de desenvolvimento para capabilities.
 %build
 %{__make} \
 	CC="%{__cc}" \
-	COPTFLAG="%{rpmcflags}"
+	COPTFLAG="%{rpmcflags}" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
