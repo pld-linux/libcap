@@ -5,7 +5,7 @@
  
  $(MINLIBNAME): $(OBJS)
 -	$(LD) -soname $(MAJLIBNAME) -x -shared -o $@ $(OBJS)
-+	$(CC) -Wl,-soname -Wl,$(MAJLIBNAME) -Wl,-x -shared -o $@ $(OBJS)
++	$(CC) $(LDFLAGS) -Wl,-soname -Wl,$(MAJLIBNAME) -Wl,-x -shared -o $@ $(OBJS)
  	ln -sf $(MINLIBNAME) $(MAJLIBNAME)
  	ln -sf $(MAJLIBNAME) $(LIBNAME)
  
