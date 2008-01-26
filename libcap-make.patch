@@ -1,0 +1,53 @@
+--- libcap-2.05/libcap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
++++ libcap-2.05/libcap/Makefile	2008-01-26 21:43:10.285220380 +0100
+@@ -16,7 +16,6 @@
+ OBJS=$(addsuffix .o, $(FILES))
+ MAJLIBNAME=$(LIBNAME).$(VERSION)
+ MINLIBNAME=$(MAJLIBNAME).$(MINOR)
+-LDFLAGS+=-lattr
+ 
+ all: $(MINLIBNAME) $(STALIBNAME)
+ 
+@@ -48,10 +47,9 @@
+ 	install -m 0644 include/sys/capability.h $(INCDIR)/sys
+ 	mkdir -p -m 0755 $(LIBDIR)
+ 	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(MINLIBNAME)
+-	install -m 0644 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
++	install -m 0755 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
+ 	ln -sf $(MINLIBNAME) $(LIBDIR)/$(MAJLIBNAME)
+ 	ln -sf $(MAJLIBNAME) $(LIBDIR)/$(LIBNAME)
+-	-/sbin/ldconfig
+ 
+ clean:
+ 	$(LOCALCLEAN)
+--- libcap-2.05/pam_cap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
++++ libcap-2.05/pam_cap/Makefile	2008-01-26 21:41:43.080250852 +0100
+@@ -14,7 +14,7 @@
+ 	@echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+ 
+ pam_cap.so: pam_cap.o
+-	$(LD) -o pam_cap.so $< $(LIBS)
++	$(LD) $(LDFLAGS) $(COPTFLAG) -o pam_cap.so $< $(LIBS)
+ 
+ pam_cap.o: pam_cap.c
+ 	$(CC) $(CFLAGS) -c $< -o $@
+--- libcap-2.05/progs/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
++++ libcap-2.05/progs/Makefile	2008-01-26 21:40:49.333187982 +0100
+@@ -9,7 +9,7 @@
+ all: $(PROGS)
+ 
+ $(PROGS): %: %.o
+-	$(CC) --static $(COPTFLAG) $(LDFLAGS) -o $@ $< $(LIBS)
++	$(CC) $(COPTFLAG) $(LDFLAGS) -o $@ $< $(LIBS)
+ 
+ %.o: %.c $(INCS)
+ 	$(CC) $(CFLAGS) -c $< -o $@
+@@ -17,7 +17,7 @@
+ install: all
+ 	mkdir -p -m 0755 $(SBINDIR)
+ 	for p in $(PROGS) ; do \
+-		install -s -m 0755 $$p $(SBINDIR) ; \
++		install -m 0755 $$p $(SBINDIR) ; \
+ 	done
+ 
+ clean:
