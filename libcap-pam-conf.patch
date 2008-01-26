@@ -1,0 +1,11 @@
+--- libcap-2.05/pam_cap/capability.conf.orig	2008-01-22 01:16:58.000000000 +0100
++++ libcap-2.05/pam_cap/capability.conf	2008-01-26 21:51:49.622815743 +0100
+@@ -16,7 +16,7 @@
+ # use them
+ 
+ ## user 'morgan' gets the CAP_SETFCAP inheritable capability
+-cap_setfcap		morgan
++# cap_setfcap		morgan
+ 
+ ## user 'luser' just inherits two capabilities (CAP_NET_RAW and CAP_FOWNER)
+ # cap_net_raw,cap_fowner	luser
