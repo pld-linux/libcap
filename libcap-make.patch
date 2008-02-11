@@ -1,14 +1,14 @@
---- libcap-2.05/libcap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
-+++ libcap-2.05/libcap/Makefile	2008-01-26 21:43:10.285220380 +0100
-@@ -16,7 +16,6 @@
- OBJS=$(addsuffix .o, $(FILES))
+--- libcap-2.06/libcap/Makefile.orig	2008-02-07 19:58:32.000000000 +0100
++++ libcap-2.06/libcap/Makefile	2008-02-11 22:13:50.396611606 +0100
+@@ -17,7 +17,6 @@
  MAJLIBNAME=$(LIBNAME).$(VERSION)
  MINLIBNAME=$(MAJLIBNAME).$(MINOR)
+ GPERF_OUTPUT = _caps_output.gperf
 -LDFLAGS+=-lattr
  
  all: $(MINLIBNAME) $(STALIBNAME)
  
-@@ -48,10 +47,9 @@
+@@ -59,10 +58,9 @@
  	install -m 0644 include/sys/capability.h $(INCDIR)/sys
  	mkdir -p -m 0755 $(LIBDIR)
  	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(MINLIBNAME)
