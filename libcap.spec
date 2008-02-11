@@ -2,16 +2,15 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.05
+Version:	2.06
 Release:	1
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
-Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.6/%{name}-%{version}.tar.gz
-# Source0-md5:	430a17a01ee7906e67903e713b7bacbc
+Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
+# Source0-md5:	18f236fbd4a3613edb194f1792ad0a69
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-pam-conf.patch
-Patch2:		http://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/support-for-prctl-based-securebits.patch
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -73,7 +72,6 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__make} \
@@ -126,7 +124,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcap.so
 %{_includedir}/sys/capability.h
-%{_mandir}/man3/_cap_names.3*
 %{_mandir}/man3/cap_*
 %{_mandir}/man3/capgetp.3*
 %{_mandir}/man3/capsetp.3*
