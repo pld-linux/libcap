@@ -8,7 +8,7 @@
  
  all: $(MINLIBNAME) $(STALIBNAME)
  
-@@ -59,10 +58,9 @@
+@@ -59,7 +58,7 @@
  	install -m 0644 include/sys/capability.h $(INCDIR)/sys
  	mkdir -p -m 0755 $(LIBDIR)
  	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(MINLIBNAME)
@@ -16,10 +16,7 @@
 +	install -m 0755 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
  	ln -sf $(MINLIBNAME) $(LIBDIR)/$(MAJLIBNAME)
  	ln -sf $(MAJLIBNAME) $(LIBDIR)/$(LIBNAME)
--	-/sbin/ldconfig
- 
- clean:
- 	$(LOCALCLEAN)
+ ifeq ($(FAKEROOT),)
 --- libcap-2.05/pam_cap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
 +++ libcap-2.05/pam_cap/Makefile	2008-01-26 21:41:43.080250852 +0100
 @@ -14,7 +14,7 @@
@@ -42,12 +39,3 @@
  
  %.o: %.c $(INCS)
  	$(CC) $(CFLAGS) -c $< -o $@
-@@ -17,7 +17,7 @@
- install: all
- 	mkdir -p -m 0755 $(SBINDIR)
- 	for p in $(PROGS) ; do \
--		install -s -m 0755 $$p $(SBINDIR) ; \
-+		install -m 0755 $$p $(SBINDIR) ; \
- 	done
- 
- clean:
