@@ -2,15 +2,14 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.08
+Version:	2.09
 Release:	1
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
-# Source0-md5:	614ce6b796ba1e9eadcf542e96fde2e2
+# Source0-md5:	eb59a0c0c0024633c9416fb17e8a2c4f
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-pam-conf.patch
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -71,7 +70,6 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__make} \
