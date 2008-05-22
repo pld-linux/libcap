@@ -11,6 +11,8 @@ Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name
 # Source0-md5:	eb59a0c0c0024633c9416fb17e8a2c4f
 Patch0:		%{name}-make.patch
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
+BuildRequires:	attr-devel
+BuildRequires:	pam-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
