@@ -2,13 +2,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.09
+Version:	2.10
 Release:	1
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
-# Source0-md5:	eb59a0c0c0024633c9416fb17e8a2c4f
+# Source0-md5:	d2351abe273a68ffdb5fd50c3ea4572a
 Patch0:		%{name}-make.patch
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
 BuildRequires:	attr-devel
