@@ -1,17 +1,37 @@
+--- libcap/Make.Rules~	2008-07-10 08:22:22.000000000 +0200
++++ libcap/Make.Rules	2008-07-27 11:50:06.884836635 +0200
+@@ -43,7 +43,7 @@
+ # Compilation specifics
+ 
+ CC := gcc
+-CFLAGS := -O2
++CFLAGS := $(OPT_CFLAGS)
+ BUILD_CC := $(CC)
+ BUILD_CFLAGS := $(CFLAGS)
+ AR := ar
+@@ -54,7 +54,7 @@
+         -Wstrict-prototypes -Wmissing-prototypes \
+         -Wnested-externs -Winline -Wshadow
+ LD=$(CC) -Wl,-x -shared
+-LDFLAGS := #-g
++LDFLAGS := $(OPT_LDFLAGS) #-g
+ 
+ KERNEL_HEADERS := $(topdir)/libcap/include
+ SYSTEM_HEADERS = /usr/include
 --- libcap-2.06/libcap/Makefile.orig	2008-02-07 19:58:32.000000000 +0100
 +++ libcap-2.06/libcap/Makefile	2008-02-11 22:13:50.396611606 +0100
 @@ -17,7 +17,6 @@
  MAJLIBNAME=$(LIBNAME).$(VERSION)
  MINLIBNAME=$(MAJLIBNAME).$(MINOR)
  GPERF_OUTPUT = _caps_output.gperf
--LDFLAGS+=-lattr
+-LDFLAGS += -lattr
  
  all: $(MINLIBNAME) $(STALIBNAME)
  
 @@ -59,7 +58,7 @@
  	install -m 0644 include/sys/capability.h $(INCDIR)/sys
  	mkdir -p -m 0755 $(LIBDIR)
- 	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(MINLIBNAME)
+ 	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(STALIBNAME)
 -	install -m 0644 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
 +	install -m 0755 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
  	ln -sf $(MINLIBNAME) $(LIBDIR)/$(MAJLIBNAME)
@@ -20,22 +40,21 @@
 --- libcap-2.05/pam_cap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
 +++ libcap-2.05/pam_cap/Makefile	2008-01-26 21:41:43.080250852 +0100
 @@ -14,7 +14,7 @@
- 	@echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+ 	install -m 0755 pam_cap.so $(LIBDIR)/security
  
  pam_cap.so: pam_cap.o
--	$(LD) -o pam_cap.so $< $(LIBS)
-+	$(LD) $(LDFLAGS) $(COPTFLAG) -o pam_cap.so $< $(LIBS)
+-	$(LD) $(CFLAGS) -o pam_cap.so $< $(LDLIBS)
++	$(LD) $(CFLAGS) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS)
  
  pam_cap.o: pam_cap.c
  	$(CC) $(CFLAGS) -c $< -o $@
---- libcap-2.05/progs/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
-+++ libcap-2.05/progs/Makefile	2008-01-26 21:40:49.333187982 +0100
-@@ -9,7 +9,7 @@
+--- libcap/progs/Makefile~	2008-07-10 08:18:40.000000000 +0200
++++ libcap/progs/Makefile	2008-07-27 11:48:59.681094184 +0200
+@@ -6,7 +6,6 @@
+ #
+ PROGS=getpcaps getcap setcap capsh
+ 
+-LDFLAGS += --static 
+ LDLIBS += -lcap
+ 
  all: $(PROGS)
- 
- $(PROGS): %: %.o
--	$(CC) --static $(COPTFLAG) $(LDFLAGS) -o $@ $< $(LIBS)
-+	$(CC) $(COPTFLAG) $(LDFLAGS) -o $@ $< $(LIBS)
- 
- %.o: %.c $(INCS)
- 	$(CC) $(CFLAGS) -c $< -o $@
