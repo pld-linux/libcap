@@ -76,9 +76,10 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %build
 %{__make} \
 	CC="%{__cc}" \
-	OPT_CFLAGS="%{rpmcflags}" \
+	OPT_CFLAGS="-Iinclude %{rpmcflags}" \
 	DEBUG= \
-	OPT_LDFLAGS="%{rpmldflags}"
+	OPT_LDFLAGS="%{rpmldflags}" \
+	LDLIBS="-L../libcap -lcap"
 
 %install
 rm -rf $RPM_BUILD_ROOT
