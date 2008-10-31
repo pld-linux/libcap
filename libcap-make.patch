@@ -37,24 +37,3 @@
  	ln -sf $(MINLIBNAME) $(LIBDIR)/$(MAJLIBNAME)
  	ln -sf $(MAJLIBNAME) $(LIBDIR)/$(LIBNAME)
  ifeq ($(FAKEROOT),)
---- libcap-2.05/pam_cap/Makefile.orig	2008-01-22 01:16:58.000000000 +0100
-+++ libcap-2.05/pam_cap/Makefile	2008-01-26 21:41:43.080250852 +0100
-@@ -14,7 +14,7 @@
- 	install -m 0755 pam_cap.so $(LIBDIR)/security
- 
- pam_cap.so: pam_cap.o
--	$(LD) $(CFLAGS) -o pam_cap.so $< $(LDLIBS)
-+	$(LD) $(CFLAGS) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS)
- 
- pam_cap.o: pam_cap.c
- 	$(CC) $(CFLAGS) -c $< -o $@
---- libcap/progs/Makefile~	2008-07-10 08:18:40.000000000 +0200
-+++ libcap/progs/Makefile	2008-07-27 11:48:59.681094184 +0200
-@@ -6,7 +6,6 @@
- #
- PROGS=getpcaps getcap setcap capsh
- 
--LDFLAGS += --static 
- LDLIBS += -lcap
- 
- all: $(PROGS)
