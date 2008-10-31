@@ -10,7 +10,7 @@ Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
 # Source0-md5:	bdebad7e0b904bd4e20c321bd48100cc
 Patch0:		%{name}-make.patch
-URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
+URL:		http://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
