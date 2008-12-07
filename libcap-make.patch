@@ -18,22 +18,4 @@
  
  KERNEL_HEADERS := $(topdir)/libcap/include
  SYSTEM_HEADERS = /usr/include
---- libcap-2.06/libcap/Makefile.orig	2008-02-07 19:58:32.000000000 +0100
-+++ libcap-2.06/libcap/Makefile	2008-02-11 22:13:50.396611606 +0100
-@@ -17,7 +17,6 @@
- MAJLIBNAME=$(LIBNAME).$(VERSION)
- MINLIBNAME=$(MAJLIBNAME).$(MINOR)
- GPERF_OUTPUT = _caps_output.gperf
--LDFLAGS += -lattr
- 
- all: $(MINLIBNAME) $(STALIBNAME)
- 
-@@ -59,7 +58,7 @@
- 	install -m 0644 include/sys/capability.h $(INCDIR)/sys
- 	mkdir -p -m 0755 $(LIBDIR)
- 	install -m 0644 $(STALIBNAME) $(LIBDIR)/$(STALIBNAME)
--	install -m 0644 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
-+	install -m 0755 $(MINLIBNAME) $(LIBDIR)/$(MINLIBNAME)
- 	ln -sf $(MINLIBNAME) $(LIBDIR)/$(MAJLIBNAME)
- 	ln -sf $(MAJLIBNAME) $(LIBDIR)/$(LIBNAME)
- ifeq ($(FAKEROOT),)
+
