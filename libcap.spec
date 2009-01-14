@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	2.16
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
@@ -13,6 +13,7 @@ Patch0:		%{name}-make.patch
 URL:		http://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
@@ -28,12 +29,24 @@ Biblioteka, programy oraz strony manuala zawierające implementację
 %description -l pt_BR.UTF-8
 Biblioteca para leitura e configuração de capabilities.
 
+%package libs
+Summary:	Libraries for libcap
+Summary(pl.UTF-8):	Biblioteki dla libcap
+Group:		Libraries
+Conflicts:	%{name} < 1:2.16-2
+
+%description libs
+Libraries for libcap.
+
+%description libs -l pl.UTF-8
+Biblioteki dla libcap.
+
 %package devel
 Summary:	Header files and development documentation for libcap
 Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do libcap
 Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files and development documentation for libcap.
@@ -60,6 +73,7 @@ Statyczna biblioteka libcap.
 Summary:	Capability module for PAM
 Summary(pl.UTF-8):	Moduł PAM capability
 Group:		Libraries
+# -libs?
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	pam
 
@@ -116,10 +130,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/getcap
 %attr(755,root,root) %{_sbindir}/getpcaps
 %attr(755,root,root) %{_sbindir}/setcap
-%attr(755,root,root) /%{_lib}/libcap.so.*.*
-%attr(755,root,root) %ghost /%{_lib}/libcap.so.2
 %{_mandir}/man8/getcap.8*
 %{_mandir}/man8/setcap.8*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/libcap.so.*.*
+%attr(755,root,root) %ghost /%{_lib}/libcap.so.2
 
 %files devel
 %defattr(644,root,root,755)
