@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	1.10
-Release:	6
+Release:	7
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
@@ -32,14 +32,13 @@ Biblioteca para leitura e configuração de capabilities.
 Summary:	Libraries for libcap
 Summary(pl.UTF-8):	Biblioteki dla libcap
 Group:		Libraries
-Conflicts:	%{name} < 1:1.10-6
+Conflicts:	%{name} < 1:1.10-7
 
 %description libs
 Libraries for libcap.
 
 %description libs -l pl.UTF-8
 Biblioteki dla libcap.
-
 
 %package devel
 Summary:	Header files and development documentation for libcap
@@ -86,8 +85,8 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man2/cap{get,set}.2
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post   libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
