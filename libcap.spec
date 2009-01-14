@@ -30,16 +30,16 @@ Biblioteka, programy oraz strony manuala zawierające implementację
 Biblioteca para leitura e configuração de capabilities.
 
 %package libs
-Summary:	Libraries for libcap
-Summary(pl.UTF-8):	Biblioteki dla libcap
+Summary:	libcap library
+Summary(pl.UTF-8):	Biblioteka libcap
 Group:		Libraries
-Conflicts:	%{name} < 1:2.16-2
+Conflicts:	libcap < 1:2.16-2
 
 %description libs
-Libraries for libcap.
+libcap library.
 
 %description libs -l pl.UTF-8
-Biblioteki dla libcap.
+Biblioteka libcap.
 
 %package devel
 Summary:	Header files and development documentation for libcap
@@ -73,8 +73,7 @@ Statyczna biblioteka libcap.
 Summary:	Capability module for PAM
 Summary(pl.UTF-8):	Moduł PAM capability
 Group:		Libraries
-# -libs?
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pam
 
 %description -n pam-pam_cap
