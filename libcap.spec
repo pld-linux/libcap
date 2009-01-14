@@ -12,7 +12,7 @@ Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{n
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
-Requires:	%{name}-libs
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
@@ -32,6 +32,7 @@ Biblioteca para leitura e configuração de capabilities.
 Summary:	Libraries for libcap
 Summary(pl.UTF-8):	Biblioteki dla libcap
 Group:		Libraries
+Conflicts:	%{name} < 1:1.10-6
 
 %description libs
 Libraries for libcap.
