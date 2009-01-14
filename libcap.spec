@@ -1,6 +1,6 @@
 Summary:	POSIX.1e capability suite
-Summary(pl):	Wsparcie dla standardu "capability" POSIX.1e
-Summary(pt_BR):	Biblioteca para leitura e configuração de capabilities.
+Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
+Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuraÃ§Ã£o de capabilities.
 Name:		libcap
 Version:	1.10
 Release:	6
@@ -11,8 +11,8 @@ Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/kernel-2.2/%{n
 # Source0-md5:	2c09eea823f67cfdde96177a959bc39b
 Patch0:		%{name}-1.92-make.patch
 Patch1:		%{name}-link.patch
-Requires:	%{name}-libs
 URL:		http://www.kernel.org/pub/linux/libs/security/linux-privs/
+Requires:	%{name}-libs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
@@ -21,17 +21,17 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The POSIX.1e capability library for Linux. This package contains the
 getcap and setcap binaries and manual pages.
 
-%description -l pl
-Biblioteka, programy oraz strony manuala zawieraj±ce implementacjê
+%description -l pl.UTF-8
+Biblioteka, programy oraz strony manuala zawierajÄ…ce implementacjÄ™
 "capability" standardu POSIX.1e.
 
-%description -l pt_BR
-Biblioteca para leitura e configuração de capabilities.
+%description -l pt_BR.UTF-8
+Biblioteca para leitura e configuraÃ§Ã£o de capabilities.
 
 %package libs
-Summary:        Libraries for libcap
-Summary(pl.UTF-8):      Biblioteki dla libcap
-Group:          Libraries
+Summary:	Libraries for libcap
+Summary(pl.UTF-8):	Biblioteki dla libcap
+Group:		Libraries
 
 %description libs
 Libraries for libcap.
@@ -42,18 +42,18 @@ Biblioteki dla libcap.
 
 %package devel
 Summary:	Header files and development documentation for libcap
-Summary(pl):	Pliki nag³ówkowe i dokumentacja do libcap
-Summary(pt_BR):	Arquivos de desenvolvimento para capabilities
+Summary(pl.UTF-8):	Pliki nagÅ‚Ã³wkowe i dokumentacja do libcap
+Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files and development documentation for libcap.
 
-%description devel -l pl
-Pliki nag³ówkowe i dokumentacja do libcap.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe i dokumentacja do libcap.
 
-%description devel -l pt_BR
+%description devel -l pt_BR.UTF-8
 Arquivos de desenvolvimento para capabilities.
 
 %prep
