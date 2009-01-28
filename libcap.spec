@@ -10,6 +10,7 @@ Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
 # Source0-md5:	9e075fda242c4070ba76407064c13302
 Patch0:		%{name}-make.patch
+Patch1:		%{name}-vserver.patch
 URL:		http://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
@@ -85,6 +86,7 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
