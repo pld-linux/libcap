@@ -1,0 +1,13 @@
+--- libcap-2.16/libcap/include/linux/capability.h~	2008-07-10 08:18:40.000000000 +0200
++++ libcap-2.16/libcap/include/linux/capability.h	2009-01-28 03:02:03.276944392 +0100
+@@ -346,7 +346,9 @@ typedef struct kernel_cap_struct {
+ 
+ #define CAP_MAC_ADMIN        33
+ 
+-#define CAP_LAST_CAP         CAP_MAC_ADMIN
++#define CAP_CONTEXT          34
++
++#define CAP_LAST_CAP         CAP_CONTEXT
+ 
+ #define cap_valid(x) ((x) >= 0 && (x) <= CAP_LAST_CAP)
+ 
