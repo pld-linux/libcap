@@ -1,0 +1,62 @@
+--- a/libcap/include/sys/capability.h
++++ b/libcap/include/sys/capability.h
+@@ -19,24 +19,12 @@ extern "C" {
+  * information for the user library.
+  */
+ 
++/* Linux headers are now sanitized properly for userspace */
++#include <linux/capability.h>
+ #include <sys/types.h>
+ #include <stdint.h>
+ 
+ /*
+- * Make sure we can be included from userland by preventing
+- * capability.h from including other kernel headers
+- */
+-#define _LINUX_TYPES_H
+-#define _LINUX_FS_H
+-#define __LINUX_COMPILER_H
+-#define __user
+-
+-typedef unsigned int __u32;
+-typedef __u32 __le32;
+-
+-#include <linux/capability.h>
+-
+-/*
+  * POSIX capability types
+  */
+ 
+--- libcap-2.16/progs/capsh.c~	2009-05-16 00:52:08.000000000 +0200
++++ libcap-2.16/progs/capsh.c	2009-05-16 00:52:22.876562306 +0200
+@@ -13,10 +13,10 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <sys/prctl.h>
+-#include <sys/capability.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <sys/wait.h>
++#include <sys/capability.h>
+ 
+ /* prctl based API for altering character of current process */
+ #define PR_GET_KEEPCAPS    7
+
+--- libcap-2.16/libcap/include/linux/capability.h~	2009-05-16 00:52:08.000000000 +0200
++++ libcap-2.16/libcap/include/linux/capability.h	2009-05-16 00:52:22.876562306 +0200
+@@ -40,13 +40,13 @@ struct task_struct;
+ typedef struct __user_cap_header_struct {
+ 	__u32 version;
+ 	int pid;
+-} __user *cap_user_header_t;
++} *cap_user_header_t;
+ 
+ typedef struct __user_cap_data_struct {
+         __u32 effective;
+         __u32 permitted;
+         __u32 inheritable;
+-} __user *cap_user_data_t;
++} *cap_user_data_t;
+ 
+ 
+ #define XATTR_CAPS_SUFFIX "capability"
