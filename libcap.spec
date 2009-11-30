@@ -14,6 +14,7 @@ Patch1:		%{name}-vserver.patch
 URL:		http://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
+BuildRequires:	perl-base
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
