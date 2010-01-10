@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	2.17
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
