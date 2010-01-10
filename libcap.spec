@@ -99,21 +99,23 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	FAKEROOT=$RPM_BUILD_ROOT \
 	lib=%{_lib}
 
 install -d $RPM_BUILD_ROOT/%{_lib}/security
-install pam_cap/pam_cap.so $RPM_BUILD_ROOT/%{_lib}/security
+install -p pam_cap/pam_cap.so $RPM_BUILD_ROOT/%{_lib}/security
 install -d $RPM_BUILD_ROOT/etc/security
-install pam_cap/capability.conf $RPM_BUILD_ROOT/etc/security
+cp -a pam_cap/capability.conf $RPM_BUILD_ROOT/etc/security
 
 install -d $RPM_BUILD_ROOT%{_libdir}
-install libcap/libcap.a $RPM_BUILD_ROOT%{_libdir}
+cp -a libcap/libcap.a $RPM_BUILD_ROOT%{_libdir}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libcap.so
 rm $RPM_BUILD_ROOT/%{_lib}/libcap.so
+rm $RPM_BUILD_ROOT/%{_lib}/libcap.a
+
+chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
 
 # newer versions exist in man-pages
 # and these syscalls are specific to Linux/glibc, not libcap
