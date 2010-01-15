@@ -2,13 +2,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.17
-Release:	2
+Version:	2.19
+Release:	1
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
-# Source0-md5:	fa8c3841ce491b379de316a195e65da2
+# Source0-md5:	9caa6dafc9e3db4cbaecdb8e48f23fa2
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-vserver.patch
 URL:		http://sites.google.com/site/fullycapable/
@@ -134,6 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/getcap
 %attr(755,root,root) %{_sbindir}/getpcaps
 %attr(755,root,root) %{_sbindir}/setcap
+%{_mandir}/man1/capsh.1*
 %{_mandir}/man8/getcap.8*
 %{_mandir}/man8/setcap.8*
 
