@@ -1,13 +1,16 @@
---- libcap-2.16/libcap/include/linux/capability.h~	2008-07-10 08:18:40.000000000 +0200
-+++ libcap-2.16/libcap/include/linux/capability.h	2009-01-28 03:02:03.276944392 +0100
-@@ -346,7 +346,9 @@ typedef struct kernel_cap_struct {
+--- libcap-2.20/libcap/include/linux/capability.h~	2011-01-19 06:00:55.000000000 +0100
++++ libcap-2.20/libcap/include/linux/capability.h	2011-01-20 23:34:36.261352242 +0100
+@@ -362,7 +362,12 @@
  
- #define CAP_MAC_ADMIN        33
+ #define CAP_LAST_CAP         CAP_SYSLOG
  
--#define CAP_LAST_CAP         CAP_MAC_ADMIN
-+#define CAP_CONTEXT          34
+-#define cap_valid(x) ((x) >= 0 && (x) <= CAP_LAST_CAP)
++/* Allow context manipulations */
++/* Allow changing context info on files */
 +
-+#define CAP_LAST_CAP         CAP_CONTEXT
++#define CAP_CONTEXT         63
++
++#define cap_valid(x) ((x) >= 0 && ((x) <= CAP_LAST_CAP || (x) == CAP_CONTEXT))
  
- #define cap_valid(x) ((x) >= 0 && (x) <= CAP_LAST_CAP)
- 
+ /*
+  * Bit location of each capability (used by user-space library and kernel)
