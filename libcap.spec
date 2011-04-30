@@ -2,13 +2,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.20
+Version:	2.21
 Release:	1
 Epoch:		1
 License:	GPL or BSD
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.gz
-# Source0-md5:	8ce6905851ffdde287d00d8269775ade
+# Source0-md5:	61966ef40f2dee8731b69db895e4548d
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-vserver.patch
 URL:		http://sites.google.com/site/fullycapable/
@@ -114,14 +114,10 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 cp -a libcap/libcap.a $RPM_BUILD_ROOT%{_libdir}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libcap.so
-rm $RPM_BUILD_ROOT/%{_lib}/libcap.so
-rm $RPM_BUILD_ROOT/%{_lib}/libcap.a
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.so
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.a
 
 chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
-
-# newer versions exist in man-pages
-# and these syscalls are specific to Linux/glibc, not libcap
-rm -f $RPM_BUILD_ROOT%{_mandir}/man2/cap{get,set}.2
 
 %clean
 rm -rf $RPM_BUILD_ROOT
