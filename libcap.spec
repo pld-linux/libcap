@@ -2,19 +2,21 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.22
+Version:	2.23
 Release:	1
 Epoch:		1
-License:	GPL or BSD
+License:	GPL v2 or BSD
 Group:		Applications/System
-Source0:	ftp://ftp.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.bz2
-# Source0-md5:	ce64058bdb3f086ddbfca8ce6c919845
+Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
+# Source0-md5:	09a185e4b0aa8a81a51c1e4d0eba7db0
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-vserver.patch
-URL:		http://sites.google.com/site/fullycapable/
+URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-base
+BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -87,7 +89,6 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__make} \
@@ -111,13 +112,15 @@ install -d $RPM_BUILD_ROOT/etc/security
 cp -a pam_cap/capability.conf $RPM_BUILD_ROOT/etc/security
 
 install -d $RPM_BUILD_ROOT%{_libdir}
-cp -a libcap/libcap.a $RPM_BUILD_ROOT%{_libdir}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libcap.so
 %{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.so
-%{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.a
+%{__mv} $RPM_BUILD_ROOT/%{_lib}/libcap.a $RPM_BUILD_ROOT%{_libdir}
 
 chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
+
+# fix <linux/capability.h> include
+%{__sed} -i -e 's,uapi/linux/capability,linux/capability,' $RPM_BUILD_ROOT%{_includedir}/sys/capability.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -145,6 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcap.so
 %{_includedir}/sys/capability.h
+%{_pkgconfigdir}/libcap.pc
 %{_mandir}/man3/libcap*.3*
 %{_mandir}/man3/cap_*
 %{_mandir}/man3/capgetp.3*
