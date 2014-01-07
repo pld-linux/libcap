@@ -14,7 +14,6 @@ URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-base
-BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -118,9 +117,6 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
 %{__mv} $RPM_BUILD_ROOT/%{_lib}/libcap.a $RPM_BUILD_ROOT%{_libdir}
 
 chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
-
-# fix <linux/capability.h> include
-%{__sed} -i -e 's,uapi/linux/capability,linux/capability,' $RPM_BUILD_ROOT%{_includedir}/sys/capability.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
