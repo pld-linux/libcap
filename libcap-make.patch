@@ -1,7 +1,7 @@
---- libcap-2.22/Make.Rules.orig	2011-07-25 04:18:23.000000000 +0200
-+++ libcap-2.22/Make.Rules	2011-07-28 19:09:49.898308263 +0200
-@@ -48,7 +48,7 @@
- IPATH += -fPIC -I$(topdir)/libcap/include -I$(KERNEL_HEADERS)
+--- libcap-2.25/Make.Rules.orig	2016-01-31 02:14:53.000000000 +0100
++++ libcap-2.25/Make.Rules	2016-03-30 20:34:57.110616155 +0200
+@@ -49,7 +49,7 @@
+ IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
  
  CC := gcc
 -CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
@@ -9,12 +9,12 @@
  BUILD_CC := $(CC)
  BUILD_CFLAGS := $(CFLAGS) $(IPATH)
  AR := ar
-@@ -59,7 +59,7 @@
+@@ -60,7 +60,7 @@
          -Wstrict-prototypes -Wmissing-prototypes \
          -Wnested-externs -Winline -Wshadow
  LD=$(CC) -Wl,-x -shared
 -LDFLAGS := #-g
 +LDFLAGS := $(OPT_LDFLAGS) #-g
+ BUILD_GPERF := $(shell which gperf >/dev/null 2>/dev/null && echo yes)
  
  SYSTEM_HEADERS = /usr/include
- INCS=$(topdir)/libcap/include/sys/capability.h
