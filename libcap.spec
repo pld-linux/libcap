@@ -1,17 +1,25 @@
+#
+# Conditional build:
+%bcond_with	golang	# Go components (nothing useful yet?)
+
+%ifnarch %{ix86} %{x8664} %{arm} aarch64 mips64 mips64le ppc64le
+%undefine	with_golang
+%endif
 Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.27
+Version:	2.28
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	2e8f9fab32eb5ccb37969fe317fd17aa
+# Source0-md5:	4066ddca53fb7e146f98372c8e43afc4
 Patch0:		%{name}-make.patch
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
+%{?with_golang:BuildRequires:	golang}
 BuildRequires:	pam-devel
 BuildRequires:	perl-base
 BuildRequires:	tar >= 1:1.22
@@ -90,20 +98,23 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %patch0 -p1
 
 %build
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
-	OPT_CFLAGS="-Iinclude %{rpmcflags} %{rpmcppflags}" \
 	DEBUG= \
-	OPT_LDFLAGS="%{rpmldflags}" \
-	LDLIBS="-L../libcap -lcap"
+	%{!?with_golang:GOLANG=0} \
+	OPT_CFLAGS="-Iinclude %{rpmcflags} %{rpmcppflags}" \
+	OPT_LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	RAISE_SETFCAP=no \
+%{__make} -j1 install \
 	FAKEROOT=$RPM_BUILD_ROOT \
+	%{!?with_golang:GOLANG=0} \
+	RAISE_SETFCAP=no \
 	lib=%{_lib}
+
+cp -p libcap/libpsx.a $RPM_BUILD_ROOT%{_libdir}
 
 install -d $RPM_BUILD_ROOT/%{_lib}/security
 install -p pam_cap/pam_cap.so $RPM_BUILD_ROOT/%{_lib}/security
@@ -144,6 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcap.so
+%{_libdir}/libpsx.a
 %{_includedir}/sys/capability.h
 %{_pkgconfigdir}/libcap.pc
 %{_mandir}/man3/libcap*.3*

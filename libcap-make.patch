@@ -1,5 +1,5 @@
---- libcap-2.25/Make.Rules.orig	2016-01-31 02:14:53.000000000 +0100
-+++ libcap-2.25/Make.Rules	2016-03-30 20:34:57.110616155 +0200
+--- libcap-2.28/Make.Rules.orig	2019-12-07 21:10:11.000000000 +0100
++++ libcap-2.28/Make.Rules	2019-12-12 19:31:59.704359343 +0100
 @@ -49,7 +49,7 @@
  IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
  
@@ -15,6 +15,6 @@
  LD=$(CC) -Wl,-x -shared
 -LDFLAGS := #-g
 +LDFLAGS := $(OPT_LDFLAGS) #-g
- BUILD_GPERF := $(shell which gperf >/dev/null 2>/dev/null && echo yes)
+ LIBCAPLIB := -L$(topdir)/libcap -lcap
+ LIBPSXLIB := -L$(topdir)/libcap -lpsx -lpthread
  
- SYSTEM_HEADERS = /usr/include
