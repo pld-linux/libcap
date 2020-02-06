@@ -9,13 +9,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.28
+Version:	2.31
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	4066ddca53fb7e146f98372c8e43afc4
+# Source0-md5:	52120c05dc797b01f5a7ae70f4335e96
 Patch0:		%{name}-make.patch
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
@@ -125,7 +125,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libcap.so
 %{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.so
-%{__mv} $RPM_BUILD_ROOT/%{_lib}/libcap.a $RPM_BUILD_ROOT%{_libdir}
+%{__mv} $RPM_BUILD_ROOT/%{_lib}/lib{cap,psx}.a $RPM_BUILD_ROOT%{_libdir}
 
 chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
 
@@ -145,6 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/setcap
 %{_mandir}/man1/capsh.1*
 %{_mandir}/man8/getcap.8*
+%{_mandir}/man8/getpcaps.8*
 %{_mandir}/man8/setcap.8*
 
 %files libs
@@ -157,11 +158,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libcap.so
 %{_libdir}/libpsx.a
 %{_includedir}/sys/capability.h
+%{_includedir}/sys/psx_syscall.h
 %{_pkgconfigdir}/libcap.pc
+%{_pkgconfigdir}/libpsx.pc
 %{_mandir}/man3/libcap*.3*
+%{_mandir}/man3/libpsx*.3*
 %{_mandir}/man3/cap_*
 %{_mandir}/man3/capgetp.3*
 %{_mandir}/man3/capsetp.3*
+%{_mandir}/man3/psx*.3*
 
 %files static
 %defattr(644,root,root,755)
