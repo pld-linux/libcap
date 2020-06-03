@@ -9,13 +9,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.33
+Version:	2.36
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	dcc6220b4a9bf260050b20c07edcddf4
+# Source0-md5:	3d8cd4a87650cdee130691cb110c2ce2
 Patch0:		%{name}-make.patch
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
@@ -111,10 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	FAKEROOT=$RPM_BUILD_ROOT \
 	%{!?with_golang:GOLANG=0} \
+	PKGCONFIGDIR=%{_pkgconfigdir} \
 	RAISE_SETFCAP=no \
 	lib=%{_lib}
-
-cp -p libcap/libpsx.a $RPM_BUILD_ROOT%{_libdir}
 
 install -d $RPM_BUILD_ROOT/%{_lib}/security
 install -p pam_cap/pam_cap.so $RPM_BUILD_ROOT/%{_lib}/security
@@ -177,3 +176,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc pam_cap/License
 %attr(755,root,root) /%{_lib}/security/pam_cap.so
 %config(noreplace) %verify(not md5 mtime size) /etc/security/capability.conf
+
+# TODO: golang - where?
+# installs under
+#%{_datadir/gocode/src/libcap
+# or should we use
+#%{_libdir/golang/src/libcap

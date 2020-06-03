@@ -1,15 +1,16 @@
---- libcap-2.33/Make.Rules.orig	2020-03-02 00:12:15.000000000 +0100
-+++ libcap-2.33/Make.Rules	2020-03-22 18:57:35.993134683 +0100
-@@ -50,7 +50,7 @@
- IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
+--- libcap-2.36/Make.Rules.orig	2020-06-03 06:08:48.000000000 +0200
++++ libcap-2.36/Make.Rules	2020-06-03 21:32:52.392817492 +0200
+@@ -51,7 +51,8 @@
  
- CC := gcc # -std=c99
--CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
-+CFLAGS := $(OPT_CFLAGS) -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ CC := $(CROSS_COMPILE)gcc
+ DEFINES := -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-CFLAGS := -O2 $(DEFINES)
++OPT_CFLAGS := -O2
++CFLAGS := $(OPT_CFLAGS) $(DEFINES)
  BUILD_CC := $(CC)
- BUILD_CFLAGS := $(CFLAGS) $(IPATH)
- AR := ar
-@@ -61,7 +61,7 @@
+ BUILD_CFLAGS := -O2 $(DEFINES) $(IPATH)
+ AR := $(CROSS_COMPILE)ar
+@@ -62,7 +63,7 @@
          -Wstrict-prototypes -Wmissing-prototypes \
          -Wnested-externs -Winline -Wshadow
  LD=$(CC) -Wl,-x -shared
