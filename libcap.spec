@@ -9,13 +9,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.36
+Version:	2.43
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	3d8cd4a87650cdee130691cb110c2ce2
+# Source0-md5:	28f65c74c7ea797f70d3627d0bf1b342
 Patch0:		%{name}-make.patch
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
@@ -98,12 +98,12 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 %patch0 -p1
 
 %build
+CFLAGS="%{rpmcflags} %{rpmcppflags}" \
+LDFLAGS="%{rpmldflags}" \
 %{__make} -j1 \
 	CC="%{__cc}" \
 	DEBUG= \
-	%{!?with_golang:GOLANG=0} \
-	OPT_CFLAGS="-Iinclude %{rpmcflags} %{rpmcppflags}" \
-	OPT_LDFLAGS="%{rpmldflags}"
+	%{!?with_golang:GOLANG=0}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -179,6 +179,6 @@ rm -rf $RPM_BUILD_ROOT
 
 # TODO: golang - where?
 # installs under
-#%{_datadir/gocode/src/libcap
+#%{_datadir}/gocode/src/kernel.org/pub/linux/libs/security/libcap
 # or should we use
-#%{_libdir/golang/src/libcap
+#%{_libdir}/golang/src/libcap

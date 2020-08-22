@@ -1,21 +1,16 @@
---- libcap-2.36/Make.Rules.orig	2020-06-03 06:08:48.000000000 +0200
-+++ libcap-2.36/Make.Rules	2020-06-03 21:32:52.392817492 +0200
-@@ -51,7 +51,8 @@
+--- libcap-2.43/Make.Rules.orig	2020-08-22 09:14:05.046054584 +0200
++++ libcap-2.43/Make.Rules	2020-08-22 09:16:07.162059691 +0200
+@@ -56,9 +56,11 @@
  
- CC := $(CROSS_COMPILE)gcc
+ CC ?= $(CROSS_COMPILE)gcc
  DEFINES := -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
--CFLAGS := -O2 $(DEFINES)
-+OPT_CFLAGS := -O2
-+CFLAGS := $(OPT_CFLAGS) $(DEFINES)
- BUILD_CC := $(CC)
- BUILD_CFLAGS := -O2 $(DEFINES) $(IPATH)
- AR := $(CROSS_COMPILE)ar
-@@ -62,7 +63,7 @@
-         -Wstrict-prototypes -Wmissing-prototypes \
-         -Wnested-externs -Winline -Wshadow
- LD=$(CC) -Wl,-x -shared
--LDFLAGS := #-g
-+LDFLAGS := $(OPT_LDFLAGS) #-g
- LIBCAPLIB := -L$(topdir)/libcap -lcap
- LIBPSXLIB := -L$(topdir)/libcap -lpsx -lpthread
- 
+-CFLAGS ?= -O2 $(DEFINES)
++CFLAGS ?= -O2
++CFLAGS += $(DEFINES)
+ BUILD_CC ?= $(CC)
+-BUILD_CFLAGS ?= -O2 $(DEFINES) $(IPATH)
++BUILD_CFLAGS ?= -O2
++BUILD_CFLAGS += $(DEFINES) $(IPATH)
+ AR ?= $(CROSS_COMPILE)ar
+ RANLIB ?= $(CROSS_COMPILE)ranlib
+ DEBUG = -g #-DDEBUG
