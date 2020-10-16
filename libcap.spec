@@ -9,14 +9,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.43
+Version:	2.44
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	28f65c74c7ea797f70d3627d0bf1b342
-Patch0:		%{name}-make.patch
+# Source0-md5:	46ab71759e17a07efa920692ac2f714d
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 %{?with_golang:BuildRequires:	golang}
@@ -95,13 +94,14 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 LDFLAGS="%{rpmldflags}" \
 %{__make} -j1 \
 	CC="%{__cc}" \
+	COPTS="%{rpmcflags} %{rpmcppflags}" \
+	BUILD_CC="%{__cc}" \
+	BUILD_COPTS="%{rpmcflags} %{rpmcppflags}" \
 	DEBUG= \
 	%{!?with_golang:GOLANG=0}
 
