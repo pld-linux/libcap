@@ -9,13 +9,13 @@ Summary:	POSIX.1e capability suite
 Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
-Version:	2.44
+Version:	2.45
 Release:	1
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
-# Source0-md5:	46ab71759e17a07efa920692ac2f714d
+# Source0-md5:	e4d4c04ad28a3b601e374c0367113236
 URL:		https://sites.google.com/site/fullycapable/
 BuildRequires:	attr-devel
 %{?with_golang:BuildRequires:	golang}
@@ -121,11 +121,12 @@ install -d $RPM_BUILD_ROOT/etc/security
 cp -a pam_cap/capability.conf $RPM_BUILD_ROOT/etc/security
 
 install -d $RPM_BUILD_ROOT%{_libdir}
-ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcap.so.*.*) \
-	$RPM_BUILD_ROOT%{_libdir}/libcap.so
-%{__rm} $RPM_BUILD_ROOT/%{_lib}/libcap.so
-%{__mv} $RPM_BUILD_ROOT/%{_lib}/lib{cap,psx}.a $RPM_BUILD_ROOT%{_libdir}
-
+for libname in libcap libpsx ; do
+	ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/${libname}.so.*.*) \
+		$RPM_BUILD_ROOT%{_libdir}/${libname}.so
+	%{__rm} $RPM_BUILD_ROOT/%{_lib}/${libname}.so
+	%{__mv} $RPM_BUILD_ROOT/%{_lib}/${libname}.a $RPM_BUILD_ROOT%{_libdir}
+done
 chmod a+x $RPM_BUILD_ROOT/%{_lib}/*.so*
 
 %clean
@@ -151,25 +152,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/libcap.so.*.*
 %attr(755,root,root) %ghost /%{_lib}/libcap.so.2
+%attr(755,root,root) /%{_lib}/libpsx.so.*.*
+%attr(755,root,root) %ghost /%{_lib}/libpsx.so.2
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcap.so
-%{_libdir}/libpsx.a
+%attr(755,root,root) %{_libdir}/libpsx.so
 %{_includedir}/sys/capability.h
 %{_includedir}/sys/psx_syscall.h
 %{_pkgconfigdir}/libcap.pc
 %{_pkgconfigdir}/libpsx.pc
 %{_mandir}/man3/libcap*.3*
 %{_mandir}/man3/libpsx*.3*
-%{_mandir}/man3/cap_*
+%{_mandir}/man3/cap_*.3*
 %{_mandir}/man3/capgetp.3*
 %{_mandir}/man3/capsetp.3*
-%{_mandir}/man3/psx*.3*
+%{_mandir}/man3/psx_*.3*
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcap.a
+%{_libdir}/libpsx.a
 
 %files -n pam-pam_cap
 %defattr(644,root,root,755)
