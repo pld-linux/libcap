@@ -22,7 +22,7 @@ BuildRequires:	attr-devel
 BuildRequires:	pam-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir		/sbin
@@ -55,7 +55,7 @@ Summary:	Header files and development documentation for libcap
 Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do libcap
 Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento para capabilities
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files and development documentation for libcap.
@@ -70,7 +70,7 @@ Arquivos de desenvolvimento para capabilities.
 Summary:	Static libcap library
 Summary(pl.UTF-8):	Statyczna biblioteka libcap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description static
 Static libcap library.
@@ -82,8 +82,8 @@ Statyczna biblioteka libcap.
 Summary:	Capability module for PAM
 Summary(pl.UTF-8):	Moduł PAM capability
 Group:		Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	pam
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:	pam%{?_isa}
 
 %description -n pam-pam_cap
 PAM capability module enforces inheritable capability sets.
