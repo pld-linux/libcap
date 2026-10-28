@@ -1,0 +1,126 @@
+From 27e899db7fd3f945f0c144cff179e4e558d0a053 Mon Sep 17 00:00:00 2001
+From: Sayed Kaif <skaif@digiscrypt.com>
+Date: Tue, 16 Jun 2026 23:34:34 +0530
+Subject: cap_proc: use 32-bit-clean setuid/setgid syscalls in the psx path
+
+_cap_setuid() and _cap_setgroups() issued the bare SYS_setuid and
+SYS_setgid system calls. On 32-bit architectures that predate the
+Linux 2.4 uid_t/gid_t widening (i386, arm, ...), these numbers refer
+to the legacy 16-bit system calls, which silently truncate any id
+that does not fit in 16 bits. The glibc wrappers avoid this by using
+the *32 variants, and libcap already did so for setgroups via
+sys_setgroups_variant, but setuid and setgid were missed.
+
+This is a security problem, not a portability nit. The raw syscall is
+taken when libpsx is linked (_libcap_overrode_syscalls == 1), the
+recommended setup for multithreaded programs needing all-threads
+credential changes. On such a build a process calling cap_setuid(0x10000)
+to drop privilege has the id truncated to 0 and stays root; high ids
+from subuid/container ranges land on a different, unintended user.
+
+Select the *32 variants for setuid and setgid alongside the existing
+setgroups handling, and add build-time static assertions so that any
+future regression to a truncating variant on an architecture that
+exposes the legacy calls becomes a compile error.
+
+Verified on x86-64: the tree builds cleanly and cap_test passes; the
+static_assert fires when the syscall is forced back to the legacy
+number. The truncation itself was reproduced on a live kernel via the
+IA32 legacy syscall table (nr 23 truncates 66536 & 0xffff to 1000 and
+succeeds; nr 213 correctly rejects with EPERM).
+
+Signed-off-by: Sayed Kaif <skaif@digiscrypt.com>
+Signed-off-by: Andrew G. Morgan <morgan@kernel.org>
+---
+ libcap/cap_proc.c | 54 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 45 insertions(+), 9 deletions(-)
+
+diff --git a/libcap/cap_proc.c b/libcap/cap_proc.c
+index 09b74ca..a84d70e 100644
+--- a/libcap/cap_proc.c
++++ b/libcap/cap_proc.c
+@@ -549,6 +549,49 @@ cap_mode_t cap_get_mode(void)
+     return CAP_MODE_NOPRIV;
+ }
+ 
++/*
++ * Changing the uid/gid of a process must use the 32-bit-clean system
++ * calls. On 32-bit architectures that predate the Linux 2.4 uid_t/gid_t
++ * widening (i386, arm, ...), the bare SYS_setuid/SYS_setgid/SYS_setgroups
++ * numbers refer to the legacy system calls that operate on a 16-bit
++ * identifier and *silently truncate* any value that does not fit. The
++ * glibc setuid()/setgid()/setgroups() wrappers avoid this by issuing the
++ * *32 variants, but the psx syscall path that libcap uses to perform a
++ * (POSIX semantics, all-threads) credential change bypasses glibc, so we
++ * must select the wide variants ourselves. Getting this wrong is a
++ * security problem rather than a mere portability nit: e.g. an attempt to
++ * drop privilege to uid 0x10000 would be truncated to uid 0, leaving the
++ * process running as root.
++ */
++#if defined(__arm__) || defined(__i386__) || \
++    defined(__i486__) || defined(__i586__) || defined(__i686__)
++#define sys_setuid_variant     SYS_setuid32
++#define sys_setgid_variant     SYS_setgid32
++#define sys_setgroups_variant  SYS_setgroups32
++#else
++#define sys_setuid_variant     SYS_setuid
++#define sys_setgid_variant     SYS_setgid
++#define sys_setgroups_variant  SYS_setgroups
++#endif
++
++/*
++ * Whenever the kernel exposes the legacy 16-bit credential system calls
++ * it also exposes the 32-bit-clean *32 variants. Assert at build time
++ * that we never regress to a truncating variant on such architectures.
++ */
++#ifdef SYS_setuid32
++libcap_static_assert(sys_setuid_variant == SYS_setuid32,
++		     setuid_syscall_must_be_32bit_clean);
++#endif
++#ifdef SYS_setgid32
++libcap_static_assert(sys_setgid_variant == SYS_setgid32,
++		     setgid_syscall_must_be_32bit_clean);
++#endif
++#ifdef SYS_setgroups32
++libcap_static_assert(sys_setgroups_variant == SYS_setgroups32,
++		     setgroups_syscall_must_be_32bit_clean);
++#endif
++
+ static int _cap_setuid(struct syscaller_s *sc, uid_t uid)
+ {
+     const cap_value_t raise_cap_setuid[] = {CAP_SETUID};
+@@ -570,7 +613,7 @@ static int _cap_setuid(struct syscaller_s *sc, uid_t uid)
+     int ret = _cap_set_proc(sc, working);
+     if (ret == 0) {
+ 	if (_libcap_overrode_syscalls) {
+-	    ret = sc->three(SYS_setuid, (long int) uid, 0, 0);
++	    ret = sc->three(sys_setuid_variant, (long int) uid, 0, 0);
+ 	    if (ret < 0) {
+ 		errno = -ret;
+ 		ret = -1;
+@@ -600,13 +643,6 @@ int cap_setuid(uid_t uid)
+     return _cap_setuid(&multithread, uid);
+ }
+ 
+-#if defined(__arm__) || defined(__i386__) || \
+-    defined(__i486__) || defined(__i586__) || defined(__i686__)
+-#define sys_setgroups_variant  SYS_setgroups32
+-#else
+-#define sys_setgroups_variant  SYS_setgroups
+-#endif
+-
+ static int _cap_setgroups(struct syscaller_s *sc,
+ 			  gid_t gid, size_t ngroups, const gid_t groups[])
+ {
+@@ -628,7 +664,7 @@ static int _cap_setgroups(struct syscaller_s *sc,
+     int ret = _cap_set_proc(sc, working);
+     if (_libcap_overrode_syscalls) {
+ 	if (ret == 0) {
+-	    ret = sc->three(SYS_setgid, (long int) gid, 0, 0);
++	    ret = sc->three(sys_setgid_variant, (long int) gid, 0, 0);
+ 	}
+ 	if (ret == 0) {
+ 	    ret = sc->three(sys_setgroups_variant, (long int) ngroups,
+-- 
+cgit 1.3.1-korg
+

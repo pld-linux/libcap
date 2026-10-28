@@ -1,0 +1,38 @@
+From 4bef9a89d94cafa551f5513ec58e96eb9199426b Mon Sep 17 00:00:00 2001
+From: "Andrew G. Morgan" <morgan@kernel.org>
+Date: Tue, 16 Jun 2026 05:54:28 -0700
+Subject: Cast getdents64() return as ssize_t and not the unsigned size_t.
+
+Thanks to Sayed Kaif <skaif@digiscrypt.com> for reporting and
+collaborating on the fix.
+
+Signed-off-by: Andrew G. Morgan <morgan@kernel.org>
+---
+ psx/psx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/psx/psx.c b/psx/psx.c
+index bfd4d61..ed08b55 100644
+--- a/psx/psx.c
++++ b/psx/psx.c
+@@ -346,7 +346,7 @@ long int __psx_syscall(long int syscall_nr, ...) {
+ 
+ 	for (;;) {
+ 	    char buf[BUF_SIZE];
+-	    size_t nread = syscall(SYS_getdents64, fd, buf, BUF_SIZE);
++	    ssize_t nread = syscall(SYS_getdents64, fd, buf, BUF_SIZE);
+ 	    if (nread == 0) {
+ 		break;
+ 	    } else if (nread < 0) {
+@@ -354,7 +354,7 @@ long int __psx_syscall(long int syscall_nr, ...) {
+ 		kill(psx_tracker.pid, SIGKILL);
+ 	    }
+ 
+-	    size_t offset;
++	    ssize_t offset;
+ 	    unsigned short reclen;
+ 	    for (offset = 0; offset < nread; offset += reclen) {
+ 		/* deal with potential unaligned reads */
+-- 
+cgit 1.3.1-korg
+

@@ -1,0 +1,64 @@
+From 35e8ea44adbaa1c17d5dae1df6b9d4a9770ad662 Mon Sep 17 00:00:00 2001
+From: Sayed Kaif <skaif@digiscrypt.com>
+Date: Fri, 10 Jul 2026 01:31:05 +0530
+Subject: cap_flag: reject negative bit in the cap_iab_t vector accessors
+
+cap_iab_get_vector() and cap_iab_set_vector() bound the requested
+capability index with a single test, "bit >= cap_max_bits()".
+cap_value_t is a signed int, so this signed comparison does not reject
+a negative bit: for example -1 >= cap_max_bits() is false. The
+functions then compute
+
+    unsigned o = (bit >> 5);
+
+and use o to index the fixed-size iab->i[], iab->a[] and iab->nb[]
+arrays. For a negative bit the arithmetic right shift preserves the
+sign, so the value converted to the unsigned index is enormous
+(-1 >> 5 == -1, which becomes 0xFFFFFFFF). cap_iab_get_vector() then
+reads, and cap_iab_set_vector() reads and writes, far outside the
+heap-allocated iab object.
+
+The sibling accessors cap_get_flag() and cap_set_flag() already reject
+out-of-range indices with an explicit "value >= 0" test; the IAB
+vector accessors only checked the upper bound. Add the matching
+"bit < 0" check to both so a negative index is rejected the same way an
+oversized one is (get returns 0, set returns -1/EINVAL) instead of
+touching memory out of bounds.
+
+Verified by compiling the real cap_flag.c and calling
+cap_iab_set_vector(iab, CAP_IAB_INH, -32, CAP_SET): before the change
+AddressSanitizer reports an out-of-bounds access at cap_flag.c:261
+(index 0xFFFFFFFF); after the change the call returns -1/EINVAL, while
+valid bits (e.g. 5) still succeed and the upper bound is unaffected.
+
+Signed-off-by: Sayed Kaif <skaif@digiscrypt.com>
+Signed-off-by: Andrew G. Morgan <morgan@kernel.org>
+---
+ libcap/cap_flag.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libcap/cap_flag.c b/libcap/cap_flag.c
+index 94afd1e..7ce5909 100644
+--- a/libcap/cap_flag.c
++++ b/libcap/cap_flag.c
+@@ -211,7 +211,7 @@ int cap_fill(cap_t cap_d, cap_flag_t to, cap_flag_t from)
+ cap_flag_value_t cap_iab_get_vector(cap_iab_t iab, cap_iab_vector_t vec,
+ 				    cap_value_t bit)
+ {
+-    if (!good_cap_iab_t(iab) || bit >= cap_max_bits()) {
++    if (!good_cap_iab_t(iab) || bit < 0 || bit >= cap_max_bits()) {
+ 	return 0;
+     }
+ 
+@@ -246,7 +246,7 @@ cap_flag_value_t cap_iab_get_vector(cap_iab_t iab, cap_iab_vector_t vec,
+ int cap_iab_set_vector(cap_iab_t iab, cap_iab_vector_t vec, cap_value_t bit,
+ 		       cap_flag_value_t raised)
+ {
+-    if (!good_cap_iab_t(iab) || (raised >> 1) || bit >= cap_max_bits()) {
++    if (!good_cap_iab_t(iab) || (raised >> 1) || bit < 0 || bit >= cap_max_bits()) {
+ 	errno = EINVAL;
+ 	return -1;
+     }
+-- 
+cgit 1.3.1-korg
+

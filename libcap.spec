@@ -10,14 +10,19 @@ Summary(pl.UTF-8):	Wsparcie dla standardu "capability" POSIX.1e
 Summary(pt_BR.UTF-8):	Biblioteca para leitura e configuração de capabilities.
 Name:		libcap
 Version:	2.78
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2 or BSD
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/%{name}-%{version}.tar.xz
 # Source0-md5:	0ff11419aa4813c0a0f84fe67bf3b39e
+# https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=27e899db7fd3f945f0c144cff179e4e558d0a053
+Patch0:		%{name}-setuid32.patch
+# https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=4bef9a89d94cafa551f5513ec58e96eb9199426b
+Patch1:		%{name}-psx-getdents64.patch
+# https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=35e8ea44adbaa1c17d5dae1df6b9d4a9770ad662
+Patch2:		%{name}-iab-negative-bit.patch
 URL:		https://sites.google.com/site/fullycapable/
-BuildRequires:	attr-devel
 %{?with_golang:BuildRequires:	golang}
 BuildRequires:	pam-devel
 BuildRequires:	tar >= 1:1.22
@@ -93,6 +98,9 @@ Moduł PAM capability wymuszający dziedziczone zbiory uprawnień.
 
 %prep
 %setup -q
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 %build
 LDFLAGS="%{rpmldflags}" \
